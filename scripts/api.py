@@ -8,6 +8,8 @@ from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 from datetime import datetime
 
+from text_prompts import text_prompts
+
 try:
     load_dotenv()
 except:
@@ -44,9 +46,9 @@ def generate_and_save_image(input_prompt: str):
                 img = Image.open(io.BytesIO(artifact.binary))
                 timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
                 img.save(f"../images/{timestamp}.png")
+                print(f"image created {timestamp}.png")
 
 
 if __name__ == "__main__":
-    input_prompt = "penguins flying in the sky"
-
-    generate_and_save_image(input_prompt)
+    for prompt in text_prompts:
+        generate_and_save_image(prompt)
