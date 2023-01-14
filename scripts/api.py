@@ -2,13 +2,10 @@ import io
 import os
 import warnings
 from dotenv import load_dotenv
-from IPython.display import display
-from PIL import Image
+import numpy as np
 from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 from datetime import datetime
-
-from text_prompts import text_prompts
 
 try:
     load_dotenv()
@@ -24,7 +21,7 @@ except KeyError:
     warnings.warn("STABILITY_KEY not found in environment")
 
 
-def generate_and_save_image(input_prompt: str):
+def generate_image(input_prompt: str):
     """Submit a request to generate a single image from a text prompt"""
 
     # the object returned is a python generator
@@ -43,12 +40,11 @@ def generate_and_save_image(input_prompt: str):
                     "Please modify the prompt and try again."
                 )
             if artifact.type == generation.ARTIFACT_IMAGE:
-                img = Image.open(io.BytesIO(artifact.binary))
-                timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-                img.save(f"../images/{timestamp}.png")
-                print(f"image created {timestamp}.png")
+                binary_data = io.BytesIO(artifact.binary)
+                image_data = np.frombuffer(binary_data.read(), np.uint8)
+                uint8array_data = np.asarray(image_data, dtype=np.uint8)
+                print(uint8array_data)
 
 
 if __name__ == "__main__":
-    for prompt in text_prompts:
-        generate_and_save_image(prompt)
+    generate_image("rural village burning in blue flames")
