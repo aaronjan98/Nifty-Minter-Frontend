@@ -31,11 +31,10 @@ class genImgAndRtnUri {
         ["../python/gen_img.py", "generate_image", inputPrompt, this.apiKey],
         { stdio: "pipe" }
       );
+      let chunks = [];
 
       pythonProcess.stdout.on("data", (data) => {
-        console.log({ data });
-        const imageData = Buffer.from(data.toString());
-        resolve(this.uploadImg2IPFS(imageData));
+        chunks.push(data);
       });
 
       pythonProcess.stderr.on("data", (error) => {
@@ -45,6 +44,13 @@ class genImgAndRtnUri {
       pythonProcess.on("close", (code) => {
         if (code !== 0) {
           reject(`child process exited with code ${code}`);
+        } else {
+          const imageBytes = Buffer.concat(chunks);
+          const uint8Array = new Uint8Array(imageBytes);
+
+          this.uploadImg2IPFS(uint8Array)
+            .then((uri) => resolve(uri))
+            .catch((err) => reject(err));
         }
       });
     });
@@ -65,7 +71,7 @@ class genImgAndRtnUri {
       },
     });
 
-    const result = await client.add({ content: fileContent });
+    const result = await client.add(fileContent);
     const uri = `${subdomain}/ipfs/${result.path}`;
 
     return uri;

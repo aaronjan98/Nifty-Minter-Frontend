@@ -1,7 +1,7 @@
 import GenImgAndRtnUri from "./ipfs.mjs";
 
 const textPrompt =
-  "A digital animation exploring the theme of artificial intelligence and its impact on humanity";
+  "A performance art piece that addresses the theme of mental health and self-care";
 const imgURI = new GenImgAndRtnUri();
 
 imgURI

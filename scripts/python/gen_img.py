@@ -1,8 +1,5 @@
-import io
-import os
 import sys
 import warnings
-import numpy as np
 from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 
@@ -34,11 +31,7 @@ def generate_image(input_prompt: str, stability_key: str):
                     "Please modify the prompt and try again."
                 )
             if artifact.type == generation.ARTIFACT_IMAGE:
-                binary_data = io.BytesIO(artifact.binary)
-                image_data = np.frombuffer(binary_data.read(), np.uint8)
-                # uint8array_data = np.asarray(image_data, dtype=np.uint8)
-                uint8array_data = np.frombuffer(image_data, dtype=np.uint8)
-                sys.stdout.buffer.write(uint8array_data)
+                sys.stdout.buffer.write(artifact.binary)
                 sys.stdout.flush()
 
 
