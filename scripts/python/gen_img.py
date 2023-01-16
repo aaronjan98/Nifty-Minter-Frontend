@@ -1,28 +1,22 @@
 import io
 import os
+import sys
 import warnings
-from dotenv import load_dotenv
 import numpy as np
 from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
-from datetime import datetime
-
-try:
-    load_dotenv()
-except:
-    warnings.warn("Cannot load the environment file")
-
-try:
-    stability_api = client.StabilityInference(
-        key=os.environ.get("STABILITY_KEY"),
-        verbose=True,
-    )
-except KeyError:
-    warnings.warn("STABILITY_KEY not found in environment")
 
 
-def generate_image(input_prompt: str):
+def generate_image(input_prompt: str, stability_key: str):
     """Submit a request to generate a single image from a text prompt"""
+
+    try:
+        stability_api = client.StabilityInference(
+            key=stability_key,
+            verbose=True,
+        )
+    except KeyError:
+        warnings.warn("STABILITY_KEY not found in environment")
 
     # the object returned is a python generator
     answers = stability_api.generate(
@@ -42,9 +36,16 @@ def generate_image(input_prompt: str):
             if artifact.type == generation.ARTIFACT_IMAGE:
                 binary_data = io.BytesIO(artifact.binary)
                 image_data = np.frombuffer(binary_data.read(), np.uint8)
-                uint8array_data = np.asarray(image_data, dtype=np.uint8)
-                print(uint8array_data)
+                # uint8array_data = np.asarray(image_data, dtype=np.uint8)
+                uint8array_data = np.frombuffer(image_data, dtype=np.uint8)
+                sys.stdout.buffer.write(uint8array_data)
+                sys.stdout.flush()
 
 
 if __name__ == "__main__":
-    generate_image("rural village burning in blue flames")
+    function_name = sys.argv[1]
+    input_prompt = sys.argv[2]
+    api_key = sys.argv[3]
+
+    if function_name == "generate_image":
+        generate_image(input_prompt, api_key)

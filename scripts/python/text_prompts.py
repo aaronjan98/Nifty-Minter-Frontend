@@ -1,3 +1,16 @@
+text_prompts_2 = [
+    "An abstract painting of a futuristic cityscape, with bold colors and distorted shapes",
+    "A sculpture of a human figure made entirely out of recycled materials",
+    "A digital animation exploring the theme of artificial intelligence and its impact on humanity",
+    "A mixed media installation depicting the erosion of natural landscapes due to urbanization",
+    "A series of photographs capturing the beauty and diversity of endangered species",
+    "A performance art piece that addresses the theme of mental health and self-care",
+    "A portrait painting that explores the concept of identity through the use of symbolism",
+    "A street art mural that addresses social and political issues in a bold and powerful way",
+    "A collage that tells a story of personal journey and self-discovery through found objects",
+    "A sound installation that explores the relationship between technology and nature through the use of electronic music and natural sounds",
+]
+
 text_prompts = [
     "A whimsical landscape of a fantasy world",
     "A still life of a vase of sunflowers",
