@@ -1,3 +1,5 @@
+#!/usr/local/bin/python3
+
 import sys
 import warnings
 from stability_sdk import client

@@ -27,7 +27,7 @@ class genImgAndRtnUri {
     // TODO: check prompt string is valid
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn(
-        "/Users/jan/.local/share/virtualenvs/python-e6ytlNl5/bin/python3",
+        "/Users/jan/.local/share/virtualenvs/python-e6ytlNl5/bin/python",
         ["../python/gen_img.py", "generate_image", inputPrompt, this.apiKey],
         { stdio: "pipe" }
       );

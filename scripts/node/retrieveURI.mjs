@@ -1,7 +1,7 @@
 import GenImgAndRtnUri from "./ipfs.mjs";
 
 const textPrompt =
-  "A performance art piece that addresses the theme of mental health and self-care";
+  "A majestic castle on a hilltop surrounded by lush green forests";
 const imgURI = new GenImgAndRtnUri();
 
 imgURI
