@@ -10,17 +10,16 @@ import logo from '../logo.svg'
 import config from '../config.json'
 const { ethereum } = window
 
-const Navigation = ({ account, chainId }) => {
+const Navigation = ({ account, setAccount, chainId }) => {
   const connectHandler = async () => {
     const accounts = await ethereum.request({
       method: 'eth_requestAccounts',
     })
-    const account = ethers.utils.getAddress(accounts[0])
+    setAccount(ethers.utils.getAddress(accounts[0]))
   }
 
   const networkHandler = async e => {
     try {
-      console.log(e.target.value)
       // Switch to the selected network
       await ethereum.request({
         method: 'wallet_switchEthereumChain',

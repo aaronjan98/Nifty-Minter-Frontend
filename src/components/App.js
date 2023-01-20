@@ -29,8 +29,14 @@ function App() {
     setChainId(chainId)
 
     // Reload page when network changes
-    window.ethereum.on('chainChanged', () => {
+    window.ethereum.on('chainChanged', async () => {
       window.location.reload()
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      })
+
+      const account = ethers.utils.getAddress(accounts[0])
+      setAccount(account)
     })
 
     // Fetch current account from Metamask when changed
@@ -50,13 +56,14 @@ function App() {
     )
     setNFT(nft)
 
-    // Fetch all NFTs from account wallet
-    setWallet(await nft.walletOfOwner(account))
+    // grab user's NFTs and balance once they connect their wallet
+    window.ethereum.on('accountsChanged', async () => {
+      setWallet(await nft.walletOfOwner(account))
 
-    // Fetch account balance
-    let balance = await provider.getBalance(account)
-    balance = ethers.utils.formatUnits(balance, 18)
-    setBalance(balance)
+      let balance = await provider.getBalance(account)
+      balance = ethers.utils.formatUnits(balance, 18)
+      setBalance(balance)
+    })
 
     setIsLoading(false)
   }
@@ -69,7 +76,7 @@ function App() {
 
   return (
     <Container>
-      <Navigation account={account} chainId={chainId} />
+      <Navigation account={account} setAccount={setAccount} chainId={chainId} />
 
       <hr />
 
