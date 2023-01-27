@@ -1,7 +1,6 @@
 import GenImgAndRtnUri from "./ipfs.mjs";
 
-const textPrompt =
-  "A majestic castle on a hilltop surrounded by lush green forests";
+const textPrompt = "A futuristic city skyline at night with flying cars";
 const imgURI = new GenImgAndRtnUri();
 
 imgURI

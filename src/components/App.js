@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-// import { Route, Link, Switch } from "react-router-dom";
 import { Container } from 'react-bootstrap'
 import { ethers } from 'ethers'
 
 import Navigation from './Navigation'
 import Loading from './Loading'
+import Create from './Create'
 
 import NFT_ABI from '../abis/NFT.json'
 import config from '../config.json'
@@ -80,18 +80,7 @@ function App() {
 
       <hr />
 
-      <h1 className="my-4 text-center">React Hardhat Template</h1>
-
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <p className="text-center">
-            <strong>Your ETH Balance:</strong> {balance} ETH
-          </p>
-          <p className="text-center">Edit App.js to add your code here.</p>
-        </>
-      )}
+      <Create />
     </Container>
   )
 }

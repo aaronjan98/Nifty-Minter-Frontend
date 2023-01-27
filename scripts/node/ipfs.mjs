@@ -12,7 +12,6 @@ const subdomain = "https://ai-gen-nft-minter.infura-ipfs.io";
 
 class genImgAndRtnUri {
   constructor() {
-    // TODO: add conditions to check the key is valid
     this.apiKey = stabilityKey;
   }
 
@@ -24,10 +23,10 @@ class genImgAndRtnUri {
   }
 
   genImg(inputPrompt) {
-    // TODO: check prompt string is valid
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn(
         "/Users/jan/.local/share/virtualenvs/python-e6ytlNl5/bin/python",
+        // "env/bin/python3",
         ["../python/gen_img.py", "generate_image", inputPrompt, this.apiKey],
         { stdio: "pipe" }
       );
@@ -77,5 +76,15 @@ class genImgAndRtnUri {
     return uri;
   }
 }
+
+(() => {
+  const textPrompt = "A futuristic city skyline at night with flying cars";
+  const imgURI = new genImgAndRtnUri();
+
+  imgURI
+    .genImg(textPrompt)
+    .then((uri) => console.log({ uri }))
+    .catch((err) => console.error({ err }));
+})();
 
 export default genImgAndRtnUri;
