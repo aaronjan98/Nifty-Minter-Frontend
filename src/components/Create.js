@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { FormControl } from 'react-bootstrap'
+import { FormControl, Button } from 'react-bootstrap'
 import { ethers } from 'ethers'
 import axios from 'axios'
 
 import { Buffer } from 'buffer'
 import { create } from 'ipfs-http-client'
 
-import Loading from './Loading'
+import Spinner from 'react-bootstrap/Spinner'
 
 const projectSecret = process.env.REACT_APP_INFURA_API_KEY || ''
 const projectId = process.env.REACT_APP_INFURA_PROJECT_ID || ''
@@ -35,7 +35,6 @@ const Create = ({ nft, provider }) => {
 
     const imageData = await createImage()
     const url = await uploadImage(imageData)
-    console.log({ url })
 
     // display image before minting
     setIsWaiting(false)
@@ -115,26 +114,33 @@ const Create = ({ nft, provider }) => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="container">
+      <form onSubmit={handleSubmit} className="prompt">
         <FormControl
           type="text"
           placeholder="Enter a description for the image"
           value={textPrompt}
           onChange={e => setTextPrompt(e.target.value)}
         />
-        <button type="submit">Create and Mint NFT</button>
+        <Button type="submit">Create and Mint NFT</Button>
       </form>
 
       <div className="image">
         {!isWaiting && url ? (
           <img src={url} alt="AI generated Image" />
         ) : isWaiting ? (
-          <div className="image__placeholder">
+          <div
+            className="image__placeholder"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Spinner animation="grow" />
             <p>{message}</p>
           </div>
         ) : (
-          <></>
+          <>Hello</>
         )}
       </div>
     </div>

@@ -13,7 +13,6 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
       Promise.all(
         wallet.map(async (value, index) => {
           let image = await nft.tokenURI(value.toString())
-          console.log(image)
 
           return (
             <Carousel.Item key={index} interval={1600}>
@@ -27,13 +26,10 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
           )
         })
       )
-        .then(walletArray => {
-          console.log(walletArray)
-          return setWalletArray(walletArray)
-        })
+        .then(walletArray => setWalletArray(walletArray))
         .catch(error => console.error(error))
     }
-  }, [wallet])
+  }, [wallet, account])
 
   return (
     <>
@@ -42,11 +38,13 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
       ) : (
         <>
           {walletArray.length > 0 && (
-            <Row>
-              <Col>
-                <Carousel className="text-center">{walletArray}</Carousel>
-              </Col>
-            </Row>
+            <div className="container">
+              <Row>
+                <Col>
+                  <Carousel className="text-center">{walletArray}</Carousel>
+                </Col>
+              </Row>
+            </div>
           )}
         </>
       )}

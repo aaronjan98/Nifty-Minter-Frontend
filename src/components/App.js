@@ -37,7 +37,6 @@ function App() {
       })
 
       const account = ethers.utils.getAddress(accounts[0])
-      console.log('account from App.js ', account)
       setAccount(account)
     })
 
@@ -77,7 +76,7 @@ function App() {
     if (isLoading) {
       loadBlockchainData()
     }
-  }, [isLoading, account])
+  }, [isLoading, account, wallet])
 
   return (
     <Container>
