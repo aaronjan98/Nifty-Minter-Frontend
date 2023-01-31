@@ -85,7 +85,7 @@ function App() {
 
       <hr />
 
-      {/* <Create nft={nft} provider={provider} account={account} /> */}
+      <Create nft={nft} provider={provider} account={account} />
 
       <DisplayNFTs
         nft={nft}

@@ -6,15 +6,34 @@ import Loading from './Loading'
 
 const DisplayNFTs = ({ nft, wallet, account, balance }) => {
   const [isWaiting, setIsWaiting] = useState(false)
+  const [walletArray, setWalletArray] = useState([])
 
-  const wall = async () => {
-    // console.log('Display wallet: ', (await nft.balanceOf(account)).toString())
-    console.log('number of nfts: ', balance.toString())
-    // console.log('wallet: ', await nft.walletOfOwner(account))
-    console.log('wallet: ', wallet)
-  }
+  useEffect(() => {
+    if (wallet) {
+      Promise.all(
+        wallet.map(async (value, index) => {
+          let image = await nft.tokenURI(value.toString())
+          console.log(image)
 
-  wall()
+          return (
+            <Carousel.Item key={index} interval={1600}>
+              <h3>NFT #{index + 1}</h3>
+              <img
+                className="d-block w-100 image"
+                src={image}
+                alt="AI generated Image"
+              />
+            </Carousel.Item>
+          )
+        })
+      )
+        .then(walletArray => {
+          console.log(walletArray)
+          return setWalletArray(walletArray)
+        })
+        .catch(error => console.error(error))
+    }
+  }, [wallet])
 
   return (
     <>
@@ -22,17 +41,13 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
         <Loading />
       ) : (
         <>
-          <Row>
-            {balance > 0 ? (
-              <Carousel className="text-center">
-                {wallet.map((value, index) =>
-                  console.log(index, value.toString())
-                )}
-              </Carousel>
-            ) : (
-              <p className="image">Please connect wallet.</p>
-            )}
-          </Row>
+          {walletArray.length > 0 && (
+            <Row>
+              <Col>
+                <Carousel className="text-center">{walletArray}</Carousel>
+              </Col>
+            </Row>
+          )}
         </>
       )}
     </>
