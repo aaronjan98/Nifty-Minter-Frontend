@@ -122,7 +122,9 @@ const Create = ({ nft, provider }) => {
           value={textPrompt}
           onChange={e => setTextPrompt(e.target.value)}
         />
-        <Button type="submit">Create and Mint NFT</Button>
+        <Button className="mint-btn" type="submit">
+          Create & Mint
+        </Button>
       </form>
 
       <div className="image">

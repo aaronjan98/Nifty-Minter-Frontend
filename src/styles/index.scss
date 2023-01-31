@@ -25,9 +25,21 @@ code {
   align-items: center;
   max-width: 610px !important;
 }
-
+/* Description */
 .prompt {
   display: flex;
+  width: 512px;
+  white-space: nowrap;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.prompt > input {
+  margin-right: 7px;
+}
+
+.mint-btn {
+  width: fit-content;
 }
 
 /* IMAGE */
