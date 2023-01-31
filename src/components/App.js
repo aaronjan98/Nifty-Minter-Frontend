@@ -84,14 +84,20 @@ function App() {
 
       <hr />
 
-      <Create nft={nft} provider={provider} account={account} />
+      {account ? (
+        <>
+          <Create nft={nft} provider={provider} account={account} />
 
-      <DisplayNFTs
-        nft={nft}
-        wallet={wallet}
-        account={account}
-        balance={balance}
-      />
+          <DisplayNFTs
+            nft={nft}
+            wallet={wallet}
+            account={account}
+            balance={balance}
+          />
+        </>
+      ) : (
+        <p className="image__placeholder image">Please connect wallet.</p>
+      )}
     </Container>
   )
 }
