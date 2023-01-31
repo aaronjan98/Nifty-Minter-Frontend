@@ -16,7 +16,7 @@ import logo from '../logo.svg'
 import config from '../config.json'
 const { ethereum } = window
 
-const Navigation = ({ account, setAccount, chainId }) => {
+const Navigation = ({ handleClick, account, setAccount, chainId }) => {
   const [isActive, setIsActive] = useState(false)
 
   const connectHandler = async () => {
@@ -80,7 +80,9 @@ const Navigation = ({ account, setAccount, chainId }) => {
               Generate Text-to-Image Art
             </NavDropdown.Item>
             <NavDropdown.Item href="#mint">Mint NFT</NavDropdown.Item>
-            <NavDropdown.Item href="#view">View My NFTs</NavDropdown.Item>
+            <NavDropdown.Item onClick={handleClick} href="#view">
+              View My NFTs
+            </NavDropdown.Item>
           </NavDropdown>
         </Navbar.Toggle>
 

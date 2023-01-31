@@ -16,7 +16,6 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
 
           return (
             <Carousel.Item key={index} interval={1600}>
-              <h3>NFT #{index + 1}</h3>
               <img
                 className="d-block w-100 image"
                 src={image}
@@ -39,6 +38,7 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
         <>
           {walletArray.length > 0 && (
             <div className="container">
+              <h2 id="view">View your NFTs</h2>
               <Row>
                 <Col>
                   <Carousel className="text-center">{walletArray}</Carousel>
