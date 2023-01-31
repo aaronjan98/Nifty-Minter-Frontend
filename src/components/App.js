@@ -5,6 +5,7 @@ import { ethers } from 'ethers'
 import Navigation from './Navigation'
 import Loading from './Loading'
 import Create from './Create'
+import DisplayNFTs from './DisplayNFTs'
 
 import NFT_ABI from '../abis/NFT.json'
 import config from '../config.json'
@@ -36,6 +37,7 @@ function App() {
       })
 
       const account = ethers.utils.getAddress(accounts[0])
+      console.log('account from App.js ', account)
       setAccount(account)
     })
 
@@ -57,13 +59,16 @@ function App() {
     setNFT(nft)
 
     // grab user's NFTs and balance once they connect their wallet
-    window.ethereum.on('accountsChanged', async () => {
-      setWallet(await nft.walletOfOwner(account))
+    // window.ethereum.on('accountsChanged', async () => {
+    //   setWallet(await nft.walletOfOwner(account))
 
-      let balance = await provider.getBalance(account)
-      balance = ethers.utils.formatUnits(balance, 18)
-      setBalance(balance)
-    })
+    //   let balance = await provider.getBalance(account)
+    //   balance = ethers.utils.formatEther(balance)
+    //   setBalance(balance)
+    // })
+
+    setWallet(await nft.walletOfOwner(account))
+    setBalance(await nft.balanceOf(account))
 
     setIsLoading(false)
   }
@@ -72,7 +77,7 @@ function App() {
     if (isLoading) {
       loadBlockchainData()
     }
-  }, [isLoading])
+  }, [isLoading, account])
 
   return (
     <Container>
@@ -80,7 +85,14 @@ function App() {
 
       <hr />
 
-      <Create />
+      {/* <Create nft={nft} provider={provider} account={account} /> */}
+
+      <DisplayNFTs
+        nft={nft}
+        wallet={wallet}
+        account={account}
+        balance={balance}
+      />
     </Container>
   )
 }

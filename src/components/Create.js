@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FormControl } from 'react-bootstrap'
+import { ethers } from 'ethers'
 import axios from 'axios'
 
 import { Buffer } from 'buffer'
 import { create } from 'ipfs-http-client'
 
+import Loading from './Loading'
+
 const projectSecret = process.env.REACT_APP_INFURA_API_KEY || ''
 const projectId = process.env.REACT_APP_INFURA_PROJECT_ID || ''
-const subdomain = 'https://ai-gen-nft-minter.infura-ipfs.io'
-
 const huggingFaceKey = process.env.REACT_APP_HUGGING_FACE_KEY || ''
 
-const Create = () => {
+const subdomain = 'https://ai-gen-nft-minter.infura-ipfs.io'
+
+const Create = ({ nft, provider }) => {
   const [textPrompt, setTextPrompt] = useState('')
-  const [image, setImage] = useState(null)
   const [url, setURL] = useState(null)
 
   const [response, setResponse] = useState(null)
@@ -33,16 +35,17 @@ const Create = () => {
 
     const imageData = await createImage()
     const url = await uploadImage(imageData)
-
     console.log({ url })
-    // await mintImage(url)
 
+    // display image before minting
     setIsWaiting(false)
+    await mintImage(url)
+
     setMessage('')
   }
 
   const createImage = async () => {
-    let data, type
+    let response, data, type
 
     setMessage('Generating Image...')
 
@@ -50,7 +53,7 @@ const Create = () => {
       const URL = `https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2`
 
       // Send the request
-      const response = await axios({
+      response = await axios({
         url: URL,
         method: 'POST',
         headers: {
@@ -73,12 +76,13 @@ const Create = () => {
       console.error(err)
     }
 
-    const uint8Array = new Uint8Array(data)
-
-    return uint8Array
+    return data
   }
 
   const uploadImage = async fileContent => {
+    setMessage('Uploading Image to IPFS...')
+    const uint8Array = new Uint8Array(fileContent)
+
     // encrypt the authorization
     const authorization = `Basic ${Buffer.from(
       `${projectId}:${projectSecret}`
@@ -93,12 +97,21 @@ const Create = () => {
       },
     })
 
-    const result = await client.add(fileContent)
+    const result = await client.add(uint8Array)
     const uri = `${subdomain}/ipfs/${result.path}`
-
     setURL(uri)
 
     return uri
+  }
+
+  const mintImage = async tokenURI => {
+    setMessage('Waiting for Mint...')
+
+    const signer = await provider.getSigner()
+    const transaction = await nft
+      .connect(signer)
+      .mint(tokenURI, { value: ethers.utils.parseEther('0.1') })
+    await transaction.wait()
   }
 
   return (
@@ -110,10 +123,20 @@ const Create = () => {
           value={textPrompt}
           onChange={e => setTextPrompt(e.target.value)}
         />
-        <button type="submit">Generate Image</button>
+        <button type="submit">Create and Mint NFT</button>
       </form>
-      {/* {response && <p>{response}</p>} */}
-      {url && <img src={url} alt="Generated Image" />}
+
+      <div className="image">
+        {!isWaiting && url ? (
+          <img src={url} alt="AI generated Image" />
+        ) : isWaiting ? (
+          <div className="image__placeholder">
+            <p>{message}</p>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   )
 }

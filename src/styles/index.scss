@@ -15,3 +15,35 @@ code {
 .mb-3.mt-4 {
   justify-content: space-around;
 }
+
+/* IMAGE */
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 90%;
+  width: 512px;
+  height: 512px;
+  margin: 0 25px;
+  border: 1px solid black;
+  border-radius: 5px;
+
+  overflow: hidden;
+}
+
+.image img {
+  width: 512px;
+  height: 512px;
+  border-radius: 6px;
+}
+
+.image__placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image__placeholder p {
+  margin: 0 10px;
+}
