@@ -116,7 +116,7 @@ const Create = ({ nft, provider }) => {
   return (
     <div className="container">
       <h2 id="mint">Generate and Mint NFT</h2>
-      <form className="prompt">
+      <form className="prompt" onSubmit={handleSubmit}>
         <FormControl
           type="text"
           placeholder="Enter a description for the image"

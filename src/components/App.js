@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap'
 import { ethers } from 'ethers'
 
 import Navigation from './Navigation'
+import Hero from './Hero'
 import Loading from './Loading'
 import Create from './Create'
 import DisplayNFTs from './DisplayNFTs'
@@ -57,26 +58,27 @@ function App() {
     )
     setNFT(nft)
 
-    // grab user's NFTs and balance once they connect their wallet
-    // window.ethereum.on('accountsChanged', async () => {
-    //   setWallet(await nft.walletOfOwner(account))
-
-    //   let balance = await provider.getBalance(account)
-    //   balance = ethers.utils.formatEther(balance)
-    //   setBalance(balance)
-    // })
-
-    setWallet(await nft.walletOfOwner(account))
-    setBalance(await nft.balanceOf(account))
+    fetchAccountInfo()
 
     setIsLoading(false)
+  }
+
+  const fetchAccountInfo = async () => {
+    if (account) {
+      setWallet(await nft.walletOfOwner(account))
+      setBalance(await nft.balanceOf(account))
+    }
   }
 
   useEffect(() => {
     if (isLoading) {
       loadBlockchainData()
     }
-  }, [isLoading, account, wallet])
+  }, [isLoading])
+
+  useEffect(() => {
+    fetchAccountInfo()
+  }, [account, wallet])
 
   return (
     <Container>
@@ -96,7 +98,7 @@ function App() {
           />
         </>
       ) : (
-        <p className="image__placeholder image">Please connect wallet.</p>
+        <Hero setAccount={setAccount} />
       )}
     </Container>
   )

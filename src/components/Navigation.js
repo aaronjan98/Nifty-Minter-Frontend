@@ -16,7 +16,7 @@ import logo from '../logo.svg'
 import config from '../config.json'
 const { ethereum } = window
 
-const Navigation = ({ handleClick, account, setAccount, chainId }) => {
+const Navigation = ({ account, setAccount, chainId }) => {
   const [isActive, setIsActive] = useState(false)
 
   const connectHandler = async () => {
@@ -65,8 +65,8 @@ const Navigation = ({ handleClick, account, setAccount, chainId }) => {
         style={{ alignItems: 'center' }}
       >
         <Navbar.Toggle
-          className={`ham ${isActive ? 'active' : ''} custom-toggle`}
           onClick={() => setIsActive(!isActive)}
+          className={`ham ${isActive ? 'active' : ''} custom-toggle`}
         >
           <div className="menu-icon">
             <input className="menu-icon__cheeckbox" type="checkbox" />
@@ -80,9 +80,7 @@ const Navigation = ({ handleClick, account, setAccount, chainId }) => {
               Generate Text-to-Image Art
             </NavDropdown.Item>
             <NavDropdown.Item href="#mint">Mint NFT</NavDropdown.Item>
-            <NavDropdown.Item onClick={handleClick} href="#view">
-              View My NFTs
-            </NavDropdown.Item>
+            <NavDropdown.Item href="#view">View My NFTs</NavDropdown.Item>
           </NavDropdown>
         </Navbar.Toggle>
 
@@ -94,7 +92,7 @@ const Navigation = ({ handleClick, account, setAccount, chainId }) => {
             height="40"
             className="d-inline-block align-top mx-3"
           />
-          <Navbar.Brand href="#">Text2Image NFT Minter</Navbar.Brand>
+          <Navbar.Brand href="#">Nifty Minter</Navbar.Brand>
         </div>
       </div>
 
