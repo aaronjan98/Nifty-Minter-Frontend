@@ -1,12 +1,21 @@
+import { useState } from 'react'
 import { ethers } from 'ethers'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 const { ethereum } = window
 
-const NUM_IMAGES = 20
-const randomIndex = Math.floor(Math.random() * NUM_IMAGES)
-const Image = require(`../../images/${randomIndex}.png`)
+const getRandomImage = () => {
+  const NUM_IMAGES = 20
+  const randomIndex = Math.floor(Math.random() * NUM_IMAGES)
+  return require(`../../images/${randomIndex}.png`)
+}
 
 const Hero = ({ setAccount }) => {
+  const [image, setImage] = useState(getRandomImage())
+
+  const randImgHandler = () => {
+    setImage(getRandomImage())
+  }
+
   const connectHandler = async () => {
     const accounts = await ethereum.request({
       method: 'eth_requestAccounts',
@@ -27,8 +36,10 @@ const Hero = ({ setAccount }) => {
         <Col>
           <img
             className="image__placeholder hero-image"
-            src={Image}
+            src={image}
             alt="Random Image"
+            style={{ cursor: 'pointer' }}
+            onClick={randImgHandler}
           />
         </Col>
       </Row>
