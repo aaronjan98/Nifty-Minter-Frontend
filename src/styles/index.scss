@@ -12,6 +12,20 @@ code {
     monospace;
 }
 
+nav.mb-3.mt-4 {
+  border-bottom: 1px solid #c7c3c3;
+  padding-bottom: 30px;
+}
+
+.container > h1 {
+  margin-top: 20px;
+}
+
+.container > h2 {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
 .mb-3.mt-4 {
   justify-content: space-around;
 }
@@ -25,6 +39,7 @@ code {
   align-items: center;
   max-width: 610px !important;
   height: 100vh;
+  padding-bottom: 45px;
 }
 /* Description */
 .prompt {

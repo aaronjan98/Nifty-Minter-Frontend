@@ -143,7 +143,7 @@ const Create = ({ nft, provider }) => {
             <p>{message}</p>
           </div>
         ) : (
-          <>Generated Images will appear here</>
+          <>Generated Images will appear here and NFTs below</>
         )}
       </div>
     </div>

@@ -84,8 +84,6 @@ function App() {
     <Container>
       <Navigation account={account} setAccount={setAccount} chainId={chainId} />
 
-      <hr />
-
       {account ? (
         <>
           <Create nft={nft} provider={provider} account={account} />
