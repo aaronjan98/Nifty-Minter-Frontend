@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { FormControl, Button } from 'react-bootstrap'
+import Spinner from 'react-bootstrap/Spinner'
 import { ethers } from 'ethers'
 import axios from 'axios'
 
 import { Buffer } from 'buffer'
 import { create } from 'ipfs-http-client'
-
-import Spinner from 'react-bootstrap/Spinner'
 
 const projectSecret = process.env.REACT_APP_INFURA_API_KEY || ''
 const projectId = process.env.REACT_APP_INFURA_PROJECT_ID || ''
@@ -18,8 +17,6 @@ const Create = ({ nft, provider }) => {
   const [textPrompt, setTextPrompt] = useState('')
   const [url, setURL] = useState(null)
 
-  const [response, setResponse] = useState(null)
-
   const [message, setMessage] = useState('')
   const [isWaiting, setIsWaiting] = useState(false)
 
@@ -27,7 +24,7 @@ const Create = ({ nft, provider }) => {
     e.preventDefault()
 
     if (textPrompt === '') {
-      window.alert('Please provide a name and description')
+      window.alert('Please provide a description')
       return
     }
 
@@ -44,15 +41,13 @@ const Create = ({ nft, provider }) => {
   }
 
   const createImage = async () => {
-    let response, data, type
-
     setMessage('Generating Image...')
 
     try {
       const URL = `https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2`
 
       // Send the request
-      response = await axios({
+      const response = await axios({
         url: URL,
         method: 'POST',
         headers: {
@@ -67,15 +62,13 @@ const Create = ({ nft, provider }) => {
         responseType: 'arraybuffer',
       })
 
-      type = response.headers['content-type']
-      data = response.data
+      const type = response.headers['content-type']
+      const data = response.data
 
-      setResponse(data)
+      return data
     } catch (err) {
       console.error(err)
     }
-
-    return data
   }
 
   const uploadImage = async fileContent => {
