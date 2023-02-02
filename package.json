@@ -20,6 +20,7 @@
     "react-scripts": "5.0.1",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.57.1",
+    "serve": "^14.2.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
