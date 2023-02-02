@@ -11,7 +11,7 @@ import {
 import Blockies from 'react-blockies'
 
 import '../styles/hamburger.scss'
-// import logo from '../logo.svg'
+import logo from '../logo.svg'
 
 import config from '../config.json'
 const { ethereum } = window
