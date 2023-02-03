@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
 import { Container, Row, Col, Button } from 'react-bootstrap'
+
+import YoutubeEmbed from './YoutubeEmbed.js'
+
 const { ethereum } = window
 
 const getRandomImage = () => {
@@ -25,27 +28,13 @@ const Hero = ({ setAccount }) => {
 
   return (
     <Container className="container">
-      <h1>Text-to-image NFT Generation</h1>
-      <Row className="hero-row">
-        <Col style={{ display: 'flex', alignItems: 'center' }}>
-          <p>
-            Create and mint an AI generated image like the one on the right in
-            one step. Click on image to see more.
-          </p>
-        </Col>
-        <Col>
-          <img
-            className="image__placeholder hero-image"
-            src={image}
-            alt="Random Image"
-            style={{ cursor: 'pointer' }}
-            onClick={randImgHandler}
-          />
-        </Col>
+      <h1>Generative NFTs with AI</h1>
+      <Row style={{ margin: '10px 0 25px 0' }}>
+        <YoutubeEmbed embedId="bSk57Y9tEbs" />
       </Row>
 
       <Row>
-        <Button onClick={connectHandler}>Connect to Metamask</Button>
+        <Button onClick={connectHandler}>Connect Wallet to Get Started</Button>
       </Row>
     </Container>
   )
