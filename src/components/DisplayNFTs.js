@@ -10,23 +10,30 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
 
   useEffect(() => {
     if (wallet) {
-      Promise.all(
-        wallet.map(async (value, index) => {
-          let image = await nft.tokenURI(value.toString())
+      const fetchData = async () => {
+        const promises = wallet.map(async (value, index) => {
+          const tokenURI = await nft.tokenURI(value.toString())
+          const data = tokenURI.split(',')[1]
+          const decodedData = atob(data)
+          const metadata = JSON.parse(decodedData)
+          console.log('metadata: ', metadata)
 
           return (
             <Carousel.Item key={index} interval={1600}>
               <img
                 className="d-block w-100 image"
-                src={image}
+                src={metadata.image}
                 alt="AI generated Image"
               />
             </Carousel.Item>
           )
         })
-      )
-        .then(walletArray => setWalletArray(walletArray))
-        .catch(error => console.error(error))
+
+        const walletArray = await Promise.all(promises)
+        setWalletArray(walletArray)
+      }
+
+      fetchData().catch(error => console.error(error))
     }
   }, [wallet, account])
 

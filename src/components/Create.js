@@ -31,8 +31,7 @@ const Create = ({ nft, provider }) => {
     setIsWaiting(true)
 
     const imageData = await createImage()
-    // const url = await uploadImage(imageData)
-    const url = await uploadImageWithMetadata(imageData)
+    const url = await uploadImage(imageData)
 
     // display image before minting
     setIsWaiting(false)
@@ -97,69 +96,13 @@ const Create = ({ nft, provider }) => {
     return uri
   }
 
-  const uploadImageWithMetadata = async fileContent => {
-    setMessage('Uploading Image and Metadata to IPFS...')
-    const uint8Array = new Uint8Array(fileContent)
-
-    const metadata = {
-      name: 'Nifty Mint #',
-      description: textPrompt,
-    }
-
-    // encrypt the authorization
-    const authorization = `Basic ${Buffer.from(
-      `${projectId}:${projectSecret}`
-    ).toString('base64')}`
-
-    const client = await create({
-      host: 'ipfs.infura.io',
-      port: 5001,
-      protocol: 'https',
-      headers: {
-        authorization,
-      },
-    })
-
-    // add the image to IPFS
-    const imageResult = await client.add(uint8Array, {
-      wrapWithDirectory: true,
-      pin: true,
-      timeout: 60000,
-    })
-
-    // format the metadata to include the image URL
-    const metadataWithImageURI = {
-      ...metadata,
-      imageURL: `https://ai-gen-nft-minter.infura-ipfs.io/ipfs/${imageResult.path}/image.png`,
-    }
-
-    // TODO: fill out metadata in nft contract
-    const transaction = await nft.retrieveMetadata(metadataWithImageURI)
-    await transaction.wait()
-
-    // add the metadata to IPFS as a separate file
-    const metadataResult = await client.add(
-      new TextEncoder().encode(JSON.stringify(formattedMetadata)),
-      {
-        wrapWithDirectory: false,
-        pin: true,
-        timeout: 60000,
-      }
-    )
-
-    const uri = `https://ai-gen-nft-minter.infura-ipfs.io/ipfs/${metadataResult.path}`
-    setURL(uri)
-
-    return uri
-  }
-
   const mintImage = async tokenURI => {
     setMessage('Waiting for Mint...')
 
     const signer = await provider.getSigner()
     const transaction = await nft
       .connect(signer)
-      .mint(tokenURI, { value: ethers.utils.parseEther('0.1') })
+      .mint(tokenURI, textPrompt, { value: ethers.utils.parseEther('0.1') })
     await transaction.wait()
   }
 
