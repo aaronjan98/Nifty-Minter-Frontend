@@ -13,7 +13,7 @@ const huggingFaceKey = process.env.REACT_APP_HUGGING_FACE_KEY || ''
 
 const subdomain = 'https://ai-gen-nft-minter.infura-ipfs.io'
 
-const Create = ({ nft, provider }) => {
+const Create = ({ nft, provider, fetchAccountInfo }) => {
   const [textPrompt, setTextPrompt] = useState('')
   const [url, setURL] = useState(null)
 
@@ -62,7 +62,6 @@ const Create = ({ nft, provider }) => {
         responseType: 'arraybuffer',
       })
 
-      const type = response.headers['content-type']
       const data = response.data
 
       return data
@@ -104,6 +103,9 @@ const Create = ({ nft, provider }) => {
       .connect(signer)
       .mint(tokenURI, textPrompt, { value: ethers.utils.parseEther('0.1') })
     await transaction.wait()
+
+    // update wallet with minted NFT
+    fetchAccountInfo()
   }
 
   return (
@@ -123,7 +125,7 @@ const Create = ({ nft, provider }) => {
 
       <div className="image">
         {!isWaiting && url ? (
-          <img src={url} alt="AI generated Image" />
+          <img src={url} alt="AI description generation" />
         ) : isWaiting ? (
           <div
             className="image__placeholder"

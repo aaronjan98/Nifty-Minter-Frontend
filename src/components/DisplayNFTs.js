@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import Carousel from 'react-bootstrap/Carousel'
 
-import Loading from './Loading'
-
-const DisplayNFTs = ({ nft, wallet, account, balance }) => {
-  const [isWaiting, setIsWaiting] = useState(false)
+const DisplayNFTs = ({ nft, account, wallet, balance }) => {
   const [walletArray, setWalletArray] = useState([])
 
   useEffect(() => {
@@ -23,7 +20,7 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
               <img
                 className="d-block w-100 image"
                 src={metadata.image}
-                alt="AI generated Image"
+                alt="AI generated NFT"
               />
             </Carousel.Item>
           )
@@ -35,25 +32,19 @@ const DisplayNFTs = ({ nft, wallet, account, balance }) => {
 
       fetchData().catch(error => console.error(error))
     }
-  }, [wallet, account])
+  }, [account, wallet])
 
   return (
     <>
-      {isWaiting ? (
-        <Loading />
-      ) : (
-        <>
-          {walletArray.length > 0 && (
-            <div className="container">
-              <h2 id="view">View your NFTs</h2>
-              <Row>
-                <Col>
-                  <Carousel className="text-center">{walletArray}</Carousel>
-                </Col>
-              </Row>
-            </div>
-          )}
-        </>
+      {walletArray.length > 0 && (
+        <div className="container">
+          <h2 id="view">View your NFTs</h2>
+          <Row>
+            <Col>
+              <Carousel className="text-center">{walletArray}</Carousel>
+            </Col>
+          </Row>
+        </div>
       )}
     </>
   )

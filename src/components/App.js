@@ -1,10 +1,9 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { ethers } from 'ethers'
 
 import Navigation from './Navigation'
 import Hero from './Hero'
-import Loading from './Loading'
 import Create from './Create'
 import DisplayNFTs from './DisplayNFTs'
 
@@ -18,13 +17,7 @@ function App() {
   const [chainId, setChainId] = useState(null)
   const [account, setAccount] = useState(null)
   const [balance, setBalance] = useState(0)
-  const [wallet, setWallet] = useState([])
-  const walletMemo = useMemo(() => {
-    return wallet
-  }, [wallet])
-  const accountMemo = useMemo(() => {
-    return account
-  }, [account])
+  const [wallet, setWallet] = useState(null)
 
   const [isLoading, setIsLoading] = useState(true)
 
@@ -82,10 +75,10 @@ function App() {
     }
   }, [isLoading])
 
-  // update wallet for DisplayNFTs
+  // initial load of wallet for DisplayNFTs
   useEffect(() => {
     fetchAccountInfo()
-  }, [accountMemo, walletMemo])
+  }, [account])
 
   return (
     <Container>
@@ -93,12 +86,17 @@ function App() {
 
       {account ? (
         <>
-          <Create nft={nft} provider={provider} account={account} />
+          <Create
+            nft={nft}
+            provider={provider}
+            account={account}
+            fetchAccountInfo={fetchAccountInfo}
+          />
 
           <DisplayNFTs
             nft={nft}
-            wallet={wallet}
             account={account}
+            wallet={wallet}
             balance={balance}
           />
         </>
