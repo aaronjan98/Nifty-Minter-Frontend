@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+<h1 align="center">Nifty Minter Dapp - Front End</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+  <a href="https://twitter.com/AJanovitch" target="_blank">
+    <img alt="Twitter: AJanovitch" src="https://img.shields.io/twitter/follow/AJanovitch.svg?style=social" />
+  </a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Create unique NFTs from text descriptions with AI image generation
 
-## Available Scripts
+## Resources
 
-In the project directory, you can run:
+- [Deployed Site](https://nifty-minter.herokuapp.com)
+- [Watch tutorial on how to use the Dapp](https://www.youtube.com/watch?v=bSk57Y9tEbs)
+- [The Backend Repo](https://github.com/aaronjan98/Nifty-Minter-Backend)
+- [Contract on Etherscan](https://goerli.etherscan.io/address/0x8d20aac997e30de71581ac30240db9ab235acb8b)
 
-### `npm start`
+## Run Locally
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Install
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- run this command for back and front end repos
 
-### `npm test`
+```sh
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- N.B. API keys are required in your front end `.env`
+  - [Get Infura API keys](https://app.infura.io)
+  - [Hugging Face Key](https://huggingface.co/)
 
-### `npm run build`
+```.env
+REACT_APP_INFURA_API_KEY=""
+REACT_APP_INFURA_PROJECT_ID=""
+REACT_APP_HUGGING_FACE_KEY=""
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Run blockchain node with ganache at the root of the back end
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh
+npm run ganache
+```
 
-### `npm run eject`
+1. Deploy NFT contract to local blockchain
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- If the front end and back end repos are adjacent to each other,
+  then the NFT ABI will automatically be written to the front end.
+  Otherwise you'll have to change the file path in `common/tokens.js`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+npx hardhat run scripts/deploy.js --network ganache
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Then you'll need to copy the outputted NFT address from the previous
+   command and update the NFT address in the front end file `src/config.json`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Optionally, you can view the ganache/hardhat accounts' Ether balances
+   with this command
 
-## Learn More
+```sh
+npx hardhat run scripts/getBalances.js --network ganache
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. start localhost server for front end
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+npm run dev
+```
 
-### Code Splitting
+### Run tests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```sh
+npx hardhat test
+```
 
-### Analyzing the Bundle Size
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+👤 **aaronjanovitch@gmail.com**
 
-### Making a Progressive Web App
+- Website: aaronjanovitch.com
+- Twitter: [@AJanovitch](https://twitter.com/AJanovitch)
+- Github: [@aaronjan98](https://github.com/aaronjan98)
+- LinkedIn: [@aaron-janovitch](https://linkedin.com/in/aaron-janovitch)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Show your support
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Give a ⭐️ if this project helped you!
