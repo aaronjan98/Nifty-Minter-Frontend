@@ -170,7 +170,7 @@ const Navigation = ({ account, setAccount, chainId }) => {
           <option value="0" disabled>
             Select Network
           </option>
-          <option value={`0x${(1338).toString(16)}`}>Localhost</option>
+          <option value={`0x${(1338).toString(16)}`}>Localhost 9002</option>
           <option value="0x5">Goerli</option>
         </Form.Select>
 

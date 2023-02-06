@@ -46,7 +46,13 @@ REACT_APP_HUGGING_FACE_KEY=""
 npm run ganache
 ```
 
-2. Deploy NFT contract to local blockchain
+2. Add the network to MetaMask and import the ganache accounts
+
+- you can change the port and chain ID in the package.json scripts,
+  but by default the RPC URL is `http://127.0.0.1:9002`,
+  the chain ID is `1338`, and the currency symbol is `ETH`.
+
+3. Deploy NFT contract to local blockchain
 
 - If the front end and back end repos are adjacent to each other,
   then the NFT ABI will automatically be written to the front end.
@@ -56,7 +62,7 @@ npm run ganache
 npx hardhat run scripts/deploy.js --network ganache
 ```
 
-3. Then you'll need to copy the outputted NFT address from the previous
+4. Then you'll need to copy the outputted NFT address from the previous
    command and update the NFT address in the front end file `src/config.json`
 
 - Optionally, you can view the ganache/hardhat accounts' Ether balances
@@ -66,7 +72,7 @@ npx hardhat run scripts/deploy.js --network ganache
   npx hardhat run scripts/getBalances.js --network ganache
   ```
 
-4. start localhost server for front end
+5. start localhost server for front end
 
 ```sh
 npm run dev
