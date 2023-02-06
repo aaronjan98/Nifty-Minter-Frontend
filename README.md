@@ -9,7 +9,7 @@
   </a>
 </p>
 
-> Create unique NFTs from text descriptions with AI image generation
+> Create unique NFTs from text descriptions with AI image generation and sell them on [OpenSea](https://testnets.opensea.io)
 
 ## Resources
 
@@ -24,19 +24,20 @@
 
 - run this command for back and front end repos
 
-```sh
-npm install
-```
+  ```sh
+  npm install
+  ```
 
 - N.B. API keys are required in your front end `.env`
+
   - [Get Infura API keys](https://app.infura.io)
   - [Hugging Face Key](https://huggingface.co/)
 
-```.env
-REACT_APP_INFURA_API_KEY=""
-REACT_APP_INFURA_PROJECT_ID=""
-REACT_APP_HUGGING_FACE_KEY=""
-```
+  ```.env
+  REACT_APP_INFURA_API_KEY=""
+  REACT_APP_INFURA_PROJECT_ID=""
+  REACT_APP_HUGGING_FACE_KEY=""
+  ```
 
 ### Usage
 
@@ -58,9 +59,9 @@ npm run ganache
   then the NFT ABI will automatically be written to the front end.
   Otherwise you'll have to change the file path in `common/tokens.js`.
 
-```sh
-npx hardhat run scripts/deploy.js --network ganache
-```
+  ```sh
+  npx hardhat run scripts/deploy.js --network ganache
+  ```
 
 4. Then you'll need to copy the outputted NFT address from the previous
    command and update the NFT address in the front end file `src/config.json`
@@ -79,6 +80,8 @@ npm run dev
 ```
 
 ### Run tests
+
+- Test contracts with hardhat
 
 ```sh
 npx hardhat test
