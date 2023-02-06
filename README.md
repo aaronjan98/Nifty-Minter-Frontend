@@ -46,7 +46,7 @@ REACT_APP_HUGGING_FACE_KEY=""
 npm run ganache
 ```
 
-1. Deploy NFT contract to local blockchain
+2. Deploy NFT contract to local blockchain
 
 - If the front end and back end repos are adjacent to each other,
   then the NFT ABI will automatically be written to the front end.
@@ -56,17 +56,17 @@ npm run ganache
 npx hardhat run scripts/deploy.js --network ganache
 ```
 
-1. Then you'll need to copy the outputted NFT address from the previous
+3. Then you'll need to copy the outputted NFT address from the previous
    command and update the NFT address in the front end file `src/config.json`
 
-1. Optionally, you can view the ganache/hardhat accounts' Ether balances
-   with this command
+- Optionally, you can view the ganache/hardhat accounts' Ether balances
+  with this command
 
-```sh
-npx hardhat run scripts/getBalances.js --network ganache
-```
+  ```sh
+  npx hardhat run scripts/getBalances.js --network ganache
+  ```
 
-1. start localhost server for front end
+4. start localhost server for front end
 
 ```sh
 npm run dev

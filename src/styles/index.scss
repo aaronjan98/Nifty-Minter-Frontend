@@ -19,7 +19,7 @@ nav.mb-3.mt-4 {
 }
 
 .container > h1 {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .container > h2 {
@@ -30,9 +30,11 @@ nav.mb-3.mt-4 {
 .mb-3.mt-4 {
   justify-content: space-between;
 }
+
 .carousel-control-prev, .carousel-control-next {
   width: 30% !important;
 }
+
 /* container */
 .container {
   display: flex;
@@ -42,6 +44,7 @@ nav.mb-3.mt-4 {
   height: 100vh;
   padding-bottom: 45px;
 }
+
 /* Description */
 .prompt {
   display: flex;
@@ -89,17 +92,4 @@ nav.mb-3.mt-4 {
 
 .image__placeholder p {
   margin: 0 10px;
-}
-
-.hero-image {
-  display: flex;
-  width: 275px;
-  height: auto;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
-.row.hero-row {
-  margin-top: 40px;
-  margin-bottom: 40px;
 }
